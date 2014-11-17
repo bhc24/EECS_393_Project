@@ -16,11 +16,25 @@ class Doctor(models.Model):
 class Prediction(models.Model):
 	patient = models.ForeignKey('Patient')
 
+class Logit(models.Model):
+    prediction = models.ForeignKey('Prediction') #many_too_one relationship
+
+class HazardFunction(models.Model):
+    prediction = models.ForeignKey('Prediction')
+    factors = models.ForeignKey('SurvivalFactors')
+
 class ExpectancyData(models.Model):
-	prediction = models.ForeignKey('Prediction')
-	percentage_survival = models.IntegerField()
+	hazard = models.ForeignKey('HazardFunction')
+	percentage_survival = models.DecimalField(max_digits=6,decimal_places=3)
 	num_weeks = models.IntegerField()
 
-class DocToPatient(models.Model):
-	doctor_id = models.ForeignKey('Doctor')
-	patient_id = models.ForeignKey('Patient')
+class MutatedGenes(models.Model):
+    gene_name = models.CharField(max_length=45)
+    meth_score = models.DecimalField(max_digits=4,decimal_places=3)
+    logit = models.ForeignKey('Logit') #many_to_one relationship
+
+class SurvivalFactors(models.Model):
+    logit = models.ForeignKey('Logit')
+    hazard = models.ForeignKey('HazardFunction')
+
+
