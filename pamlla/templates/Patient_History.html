@@ -48,7 +48,7 @@ body{
 
 .header{
 	position: absolute;
-	top: calc(25% - 35px);
+	top: calc(15% - 35px);
 	left: calc(50% - 255px);
 	z-index: 2;
 }
@@ -63,16 +63,6 @@ body{
 
 .header div span{
 	color: #5379fa !important;
-}
-
-.login{
-	position: absolute;
-	top: calc(50% - 75px);
-	left: calc(25% - 50px);
-	height: 150px;
-	width: 350px;
-	padding: 10px;
-	z-index: 2;
 }
 
 .login input[type=text]{
@@ -138,6 +128,20 @@ body{
 .login input[type=button]:focus{
 	outline: none;
 }
+.login{
+	position: absolute;
+	top: calc(30% - 75px);
+	left: calc(25% - 50px);
+	height: 150px;
+	width: 350px;
+	padding: 10px;
+	z-index: 2;
+}
+.table{
+	position: absolute;
+	top: calc(90% - 75px);
+	left: calc(25% - 40px);
+}
 
 ::-webkit-input-placeholder{
    color: rgba(255,255,255,0.6);
@@ -149,6 +153,35 @@ body{
 </style>
 
     <script src="js/prefixfree.min.js"></script>
+	
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		
+	<script type="text/javascript">
+		google.load('visualization', '1', {'packages': ['table']});
+	</script>
+	
+	<script type="text/javascript">
+
+			function drawVisualization(){
+				var patientData = google.visualization.arrayToDataTable([
+				  ['Variant', 'Data Type', 'Coefficient Value'],
+				  ['EIF2AK2', 'Mutation', '1.44467'],
+				  ['SUV39H1', 'Mutation', '1.26572'],
+				  ['SHC1', 'Mutation', '1.12107'],
+				  ['FLT3LG', 'Methylation', '2.1734'],
+				  ['RARB', 'Expression Level', '1.426937'],
+				  ]);
+			  
+			  // Create and draw visualization.
+			  
+			  table = new google.visualization.Table(document.getElementById('variant_table'));
+			  
+			  table.draw(patientData);
+			}
+			
+			google.setOnLoadCallback(drawVisualization);
+			
+		</script>
 
 </head>
 
@@ -157,16 +190,17 @@ body{
   <div class="body"></div>
 		<div class="grad"></div>
 		<div class="header">
-			<div>Patient History<span></span></div>
+			<div>Fake Patient's History<span></span></div>
 		</div>
 		<br>
 		<div class="login">
 				<div>Latest Report 10/31/2014</div>
-				<img src="coxsurvival.png" alt="some text">
-				
-				<div></div>
-				<div>9/20/2014 Report</div>
-				<img src="coxsurvival_2.png" alt="some text">
+				<img src="../../Scripts/coxsurvival.png" alt="some text" style="width: 150%; height: 225%"/>
+		</div>
+		
+		<div class="table" id="variant_table">
+			<h2>Top ranking variants</h2>
+		
 		</div>
 
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>

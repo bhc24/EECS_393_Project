@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+		<title>Dr. User's Home</title>
+		
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		
+		<script type="text/javascript">
+			google.load('visualization', '1', {'packages': ['table']});
+		</script>
+		
+		<script type="text/javascript">
+			
+
+			function drawVisualization(){
+				var patientData = google.visualization.arrayToDataTable([
+				  ['Name', 'ID', 'Last Analysis'],
+				  ['Ben Cook', 'bhc24', '10/30/2014'],
+				  ['Steph Hippo', 'slh74', '11/11/2014'],
+				  ['<a href="Patient_History.html">Fake Patient</a>', 'fxp123', '11/21/2014'],
+				  ]);
+			  
+				patientData.setColumnProperty(0, {allowHtml: true});
+			  // Create and draw visualization.
+			  
+			  table = new google.visualization.Table(document.getElementById('table_div'));
+			  
+			  table.draw(patientData, {allowHtml: true});
+			}
+			
+			google.setOnLoadCallback(drawVisualization);
+			
+		</script>
+	</head>
+ 
+	<body style="font-family: Arial;border: 0 none;">
+		<div class="section" id="header">
+			<span id="page_head"></span>
+				<h1>Dr. User's Home</h1>
+		</div>
+		<div id="table_div"></div>
+	</body>
+</html>
+		
+				
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
