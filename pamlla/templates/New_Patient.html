@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8">
 
-  <title>Random Login Form - CodePen</title>
+  <title>PAMLLA Login</title>
 
     <style>
 @import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
@@ -155,19 +155,24 @@ body{
 </head>
 
 <body>
-
-  <div class="body"></div>
-		<div class="grad"></div>
-		<div class="header">
-			<div>New Patient<span></span></div>
-		</div>
-		<br>
-		<div class="login">
-				<input type="text" placeholder="Patient Name" name="Patient Name"><br>
-				<input type="password" placeholder="Patient ID" name="Patient ID"><br>
-				<input type="button" value="Add Patient">
-		</div>
-
+  <form action="/patient_list/" method= "post">
+      <div class="body"></div>
+            <div class="grad"></div>
+            <div class="header">
+                <div>New Patient<span></span></div>
+            </div>
+            <br>
+            {% if empty_error == True %}
+                <!--Display error message here.-->
+                <div>Please make sure all fields are complete</div>
+            {% endif %}
+            <div class="login">
+                    <input type="text" placeholder="User Name" name="User Name"><br>
+                    <input type="text" placeholder="Patient Name" name="Patient Name"><br>
+                    <input type="password" placeholder="Patient ID" name="Patient ID"><br>
+                    <input type="button" value="Add Patient">
+            </div>
+  </form>
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
 
 </body>
