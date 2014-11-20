@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8">
 
-  <title>Random Login Form - CodePen</title>
+  <title>Patient History</title>
 
     <style>
 @import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
@@ -161,13 +161,12 @@ body{
 		</div>
 		<br>
 		<div class="login">
-				<div>Latest Report 10/31/2014</div>
-				<img src="coxsurvival.png" alt="some text">
-				
-				<div></div>
-				<div>9/20/2014 Report</div>
-				<img src="coxsurvival_2.png" alt="some text">
-		</div>
+            {% for history in histories%}
+                <div>{{ history.date }}</div>
+                <!--Graph here. Pass data points. -->
+                <div></div>
+		    {% endfor %}
+        </div>
 
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
 
