@@ -26,7 +26,7 @@ def add_patient(request):
             new_patient.save()
         return HttpResponseRedirect('/patients/')
     form=NewPatientForm()
-    return render(request, "New_Patient.html", form)
+    return render(request, "New_Patient.html", {'form':form})
 
 def history(request):
     #Get all histories for a particular patient
