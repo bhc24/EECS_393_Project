@@ -100,14 +100,16 @@ class SurvivalFactorsTestCase(TestCase):
     def test_survival_factor_creation(self):
         self.assertTrue(isinstance(self.test_factor, SurvivalFactors))
 
-class TestHomePage(TestCase):
+class TestLoginPage(TestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.get('http://localhost:8000/home/')
+        self.browser.get('http://localhost:8000/login/')
 
-    def test_page_load(self):
+    def test_login(self):
         #confirms page loads
         assert 'PAMLLA Login' in self.browser.title
+        self.browser.find_element_by_name('username').send_keys('stephhippo')
+        self.browser.find_element_by_name('password').send_keys('hippo')
 
     def tearDown(self):
         self.browser.quit()
@@ -115,7 +117,7 @@ class TestHomePage(TestCase):
 class TestPatientListPage(TestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.get('http://localhost:8000/patients/')
+        self.browser.get('http://localhost:8000/patient_list/')
 
     def test_table_load(self):
         table = self.browser.find_element_by_id("patient_list")
@@ -123,6 +125,17 @@ class TestPatientListPage(TestCase):
 
     def tearDown(self):
         self.browser.quit()
+
+class TestAddPatient(TestCase):
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+        self.browser.get('http://localhost:8000/add_patient/')
+
+    def test_create_new_patient(self):
+        #TODO: Talk to Ben
+
+    def test_invalid_form_data(self):
+
 
 if __name__== '__main__':
     unittest.main()

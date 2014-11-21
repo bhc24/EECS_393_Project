@@ -169,56 +169,26 @@ body{
 </head>
 
 <body>
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-  <div class="body"></div>
-		<div class="grad"></div>
+    <div class="body"></div>
+    	<div class="grad"></div>
 		<div class="header">
-			<div>New Patient<span></span></div>
-		</div>
+        <div>Add New Patient<span></span></div>
 		<br>
-		<div class="login">
-				<input type="text" placeholder="Patient Name" name="Patient Name"><br>
-				<input type="text" placeholder="Patient MRN" name="Patient MRN"><br>
-				<input type="button" value="Add Patient">
-		</div>
-
-=======
-<<<<<<< HEAD
-  <form action="/patient_list/" method= "post">
-      <div class="body"></div>
-            <div class="grad"></div>
-            <div class="header">
-                <div>New Patient<span></span></div>
-            </div>
-            <br>
-            {% if empty_error == True %}
-                <!--Display error message here.-->
-                <div>Please make sure all fields are complete</div>
-            {% endif %}
-            <div class="login">
-                    <input type="text" placeholder="User Name" name="User Name"><br>
-                    <input type="text" placeholder="Patient Name" name="Patient Name"><br>
-                    <input type="password" placeholder="Patient ID" name="Patient ID"><br>
-                    <input type="button" value="Add Patient">
-            </div>
-=======
-  {% if form.errors %}
-    <p style="color: red;">
-        Please correct the error{{ form.errors|pluralize }} below.
-    </p>
-  {% endif %}
-
   <form action="/add_patient/" method= "post">
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
     {% csrf_token %}
-    <table>
-        {{form.as_table}}
-    </table>
-    <input type="submit" value="Submit">
->>>>>>> d18d373ff1377a72b4b4cbf6e0089d060db1df58
+    <div class="login">
+        <table>
+            {{form.as_table}}
+        </table>
+        <input type="submit" value="Submit">
+    </div>
   </form>
->>>>>>> 1533e1303b8d2afcfd3317b991948b00fdf6d5ce
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
 
 </body>
