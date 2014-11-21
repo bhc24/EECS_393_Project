@@ -165,9 +165,11 @@ body{
 		<div class="login">
 				<center>
 				<table border=2 width=260 cellspacing=5 cellpadding=8 bgcolor=gray>
-				<tr><td><a href="Patient_Analyze.html">Ben Cook</a></td></tr>
-				<tr><td>Steph Hippo</td></tr>
-				<tr><td>Mandy Mandison</td></tr>
+                    {% for patient in patient_list%}
+                        <tr><td><a href="Patient_Analyze.html">{{patient.name}}</a></td></tr>
+                    {% empty %}
+                        <tr><td>No Patients</td></tr>
+                    {% endfor %}
 				</table></center>
 				<input type="button" value="Add New Patient" onclick="location.href='New_Patient.html'">
 		</div>
