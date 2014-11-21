@@ -7,7 +7,8 @@ from models import Patient, User, Doctor, Prediction, Logit, HazardFunction, Mut
 
 
 def patients(request):
-    return render(request, "Patient_List.html")
+    patient_list = Patient.objects.all()
+    return render(request, "Patient_List.html", {'patient_list': patient_list})
 
 def add_patient(request):
     errors = []
@@ -21,13 +22,14 @@ def add_patient(request):
         if form.is_valid():
             user = User(username=cd['username'], passphrase=cd['password'])
             user.save()
-            new_patient=Patient(name=cd['patient_name'], user= user)
+            new_patient=Patient(name=cd['patient_name'], user=user)
             new_patient.save()
         return HttpResponseRedirect('/patients/')
     form=NewPatientForm()
-    return render("request", "New_Patient.html", form)
+    return render(request, "New_Patient.html", form)
 
 def history(request):
+    #Get all histories for a particular patient
     return render(request, "Patient_History.html")
 
 def login(request):
