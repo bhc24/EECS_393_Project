@@ -1,9 +1,6 @@
 __author__ = 'Ben'
 
-
 import re
-
-
 
 def methylation():
     gene_bvalue = {}
@@ -27,8 +24,6 @@ def methylation():
             bvalue = float(bvalue)
 
             gene_bvalue.setdefault(gene, bvalue)
-
-
 
 def RNASeq():
     gene_rpkm = {}
