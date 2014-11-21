@@ -1,6 +1,7 @@
 from django.test import TestCase
 from models import User, Patient, Doctor, Prediction, ExpectancyData, HazardFunction, Logit, MutatedGenes, SurvivalFactors
-
+import unittest
+from selenium import webdriver
 # Create your tests here.
 
 class UserTestCase(TestCase):
@@ -98,3 +99,30 @@ class SurvivalFactorsTestCase(TestCase):
 
     def test_survival_factor_creation(self):
         self.assertTrue(isinstance(self.test_factor, SurvivalFactors))
+
+class TestHomePage(TestCase):
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+        self.browser.get('http://localhost:8000/home/')
+
+    def test_page_load(self):
+        #confirms page loads
+        assert 'PAMLLA Login' in self.browser.title
+
+    def tearDown(self):
+        self.browser.quit()
+
+class TestPatientListPage(TestCase):
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+        self.browser.get('http://localhost:8000/patients/')
+
+    def test_table_load(self):
+        table = self.browser.find_element_by_id("patient_list")
+        assert len(table.find_elements_by_tag_name('tr')) >= 2
+
+    def tearDown(self):
+        self.browser.quit()
+
+if __name__== '__main__':
+    unittest.main()
