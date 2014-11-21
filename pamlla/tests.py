@@ -100,10 +100,10 @@ class SurvivalFactorsTestCase(TestCase):
     def test_survival_factor_creation(self):
         self.assertTrue(isinstance(self.test_factor, SurvivalFactors))
 
-class TestHomePage(TestCase):
+class TestLoginPage(TestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.get('http://localhost:8000/home/')
+        self.browser.get('http://localhost:8000/login/')
 
     def test_page_load(self):
         #confirms page loads
@@ -115,7 +115,7 @@ class TestHomePage(TestCase):
 class TestPatientListPage(TestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.get('http://localhost:8000/patients/')
+        self.browser.get('http://localhost:8000/patient_list/')
 
     def test_table_load(self):
         table = self.browser.find_element_by_id("patient_list")

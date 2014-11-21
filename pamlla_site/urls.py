@@ -13,5 +13,6 @@ urlpatterns = patterns('',
     url(r'^login/', login_view),
     url(r'^home/', patients),
     url(r'^history/', history),
-    url(r'^signup/', signup)
+    url(r'^signup/', signup),
+    url(r'^$', login_view),
 )
