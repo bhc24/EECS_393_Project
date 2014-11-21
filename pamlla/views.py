@@ -26,7 +26,7 @@ def add_patient(request):
             new_patient.save()
         return HttpResponseRedirect('/patients/')
     form=NewPatientForm(
-        initial={'username': "User Name", 'patient_name': "Patient Name", 'password': "Password"}
+        initial={'username': "User Name", 'patient_name': "Patient Name"}
     )
     return render(request, "New_Patient.html", {'form':form})
 
