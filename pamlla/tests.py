@@ -105,9 +105,11 @@ class TestLoginPage(TestCase):
         self.browser = webdriver.Firefox()
         self.browser.get('http://localhost:8000/login/')
 
-    def test_page_load(self):
+    def test_login(self):
         #confirms page loads
         assert 'PAMLLA Login' in self.browser.title
+        self.browser.find_element_by_name('username').send_keys('stephhippo')
+        self.browser.find_element_by_name('password').send_keys('hippo')
 
     def tearDown(self):
         self.browser.quit()
@@ -123,6 +125,17 @@ class TestPatientListPage(TestCase):
 
     def tearDown(self):
         self.browser.quit()
+
+class TestAddPatient(TestCase):
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+        self.browser.get('http://localhost:8000/add_patient/')
+
+    def test_create_new_patient(self):
+        #TODO: Talk to Ben
+
+    def test_invalid_form_data(self):
+
 
 if __name__== '__main__':
     unittest.main()
