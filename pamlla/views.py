@@ -17,12 +17,12 @@ def add_patient(request):
     password = None
     if request.method == 'POST':
         form = NewPatientForm(request.POST)
-        cd = form.cleaned_data
         #Check existence of patient name
         if form.is_valid():
+            cd = form.cleaned_data
             user = User(username=cd['username'], passphrase=cd['password'])
             user.save()
-            new_patient=Patient(name=cd['patient_name'], user=user)
+            new_patient=Patient(name=cd['patient_name'], patient=user)
             new_patient.save()
         return HttpResponseRedirect('/patients/')
     form=NewPatientForm(
