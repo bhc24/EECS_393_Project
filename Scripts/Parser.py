@@ -1,11 +1,8 @@
 __author__ = 'Ben'
 
-
 import re
 import pickle
 import pandas as pd
-
-
 
 def methylation():
     gene_bvalue = {}
@@ -29,8 +26,6 @@ def methylation():
             bvalue = float(bvalue)
 
             gene_bvalue.setdefault(gene, bvalue)
-
-
 
 def RNASeq():
     gene_rpkm = {}
