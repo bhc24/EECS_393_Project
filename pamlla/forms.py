@@ -35,11 +35,24 @@ class SignUpForm(forms.Form):
     passphrase2 = forms.CharField(widget=forms.PasswordInput(), label="confirm passphrase")
 
     def verify_passphrase(self, request):
-        passphrase1 = self.cleaned_data.get('passphrasae')
+        passphrase1 = self.cleaned_data.get('passphrase')
         passphrase2 = self.cleaned_data.get('confirm passphrase')
+
         if(passphrase1 != passphrase2):
             raise forms.ValidationError("Passphrases do not match")
+
         return self.cleaned_data
+
+
+
+    # def clean(self):
+    #     passphrase1 = self.cleaned_data.get("passphrase")
+    #     passphrase2 = self.cleaned_data.get("confirmed passphrase")
+    #
+    #     if passphrase1 and passphrase1 != passphrase2:
+    #         raise forms.ValidationError("Passphrases do not match")
+    #
+    #     return self.clean_data
 
     def add_user(self, request):
         name = self.cleaned_data.get('name')

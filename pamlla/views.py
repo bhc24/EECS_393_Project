@@ -38,8 +38,8 @@ def history(request):
 def login_view(request):
     form = LoginForm(request.POST or None)
 
-    if 'sign_up' in request.POST:
-        return HttpResponseRedirect("/signup/")
+    # if 'sign_up' in request.POST:
+    #     return HttpResponseRedirect("/signup/")
 
     if request.POST:
         form = LoginForm(request.POST)
