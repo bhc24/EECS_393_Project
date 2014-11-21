@@ -162,14 +162,23 @@ body{
 			<div>Sign Up<span></span></div>
 		</div>
 		<br>
+		{% block content %}
+			{% if form.non_field_errors %}
+			<p> Your username and passphrase didn't match. Please try again.</p>
+			{% endif %}
 		<div class="login">
-				<input type="text" placeholder="name" name="name"><br>
-				<input type="text" placeholder="username" name="user"><br>
-				<input type="password" placeholder="passphrase" name="passphrase"><br>
-				<input type="password" placeholder="confirm passphrase" name ="confirm passphrase"><br>
-				<input type="button" value="Sign Up">
+			<form method="post" action="">
+			{% csrf_token %}
+				<input type="text" placeholder="name" name="name" id="name"><br>
+				<input type="text" placeholder="username" name="username" id="username"><br>
+				<input type="password" placeholder="passphrase" name="passphrase" id="passphrase"><br>
+				<input type="password" placeholder="confirm passphrase" name ="confirm passphrase" id="confirm passphrase"><br>
+				
+				<input type="submit" value="Sign Up" />
+				<input type="hidden" name="sign_up" value="login" />
+			</form>
 		</div>
-
+		{% endblock %}
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
 
 </body>

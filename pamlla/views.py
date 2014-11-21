@@ -56,6 +56,8 @@ def login_view(request):
 def home(request):
     return render(request, "index.html")
 
-def signup(request):
+def signup_view(request):
+    #form = SignUpForm(request.POST or None)
+
 
     return render(request, "Sign_Up.html")
