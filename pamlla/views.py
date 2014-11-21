@@ -25,7 +25,9 @@ def add_patient(request):
             new_patient=Patient(name=cd['patient_name'], user=user)
             new_patient.save()
         return HttpResponseRedirect('/patients/')
-    form=NewPatientForm()
+    form=NewPatientForm(
+        initial={'username': "User Name", 'patient_name': "Patient Name", 'password': "Password"}
+    )
     return render(request, "New_Patient.html", {'form':form})
 
 def history(request):
