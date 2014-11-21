@@ -4,12 +4,7 @@
 <head>
 
   <meta charset="UTF-8">
-
-<<<<<<< HEAD
-  <title>PAMLLA Login</title>
-=======
   <title>New Patient</title>
->>>>>>> 70e19607f83763268cb9ed0d750c6130d5f8126b
 
     <style>
 @import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
@@ -175,6 +170,7 @@ body{
 
 <body>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   <div class="body"></div>
 		<div class="grad"></div>
@@ -207,6 +203,20 @@ body{
                     <input type="password" placeholder="Patient ID" name="Patient ID"><br>
                     <input type="button" value="Add Patient">
             </div>
+=======
+  {% if form.errors %}
+    <p style="color: red;">
+        Please correct the error{{ form.errors|pluralize }} below.
+    </p>
+  {% endif %}
+
+  <form action="/add_patient/" method= "post">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <input type="submit" value="Submit">
+>>>>>>> d18d373ff1377a72b4b4cbf6e0089d060db1df58
   </form>
 >>>>>>> 1533e1303b8d2afcfd3317b991948b00fdf6d5ce
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>

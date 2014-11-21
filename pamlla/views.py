@@ -1,8 +1,9 @@
 from django.shortcuts import render
+from django.contrib import auth
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, loader
-from forms import NewPatientForm
-from models import Patient, User, Doctor, Prediction, Logit, HazardFunction, MutatedGenes, SurvivalFactors
+from pamlla.forms import NewPatientForm, LoginForm
+from pamlla.models import Patient, User, Doctor, Prediction, Logit, HazardFunction, MutatedGenes, SurvivalFactors
 # Create your views here.
 
 
@@ -34,8 +35,27 @@ def history(request):
     #Get all histories for a particular patient
     return render(request, "Patient_History.html")
 
-def login(request):
-    return render(request, "Sign_Up.html")
+def login_view(request):
+    form = LoginForm(request.POST or None)
+
+    if 'sign_up' in request.POST:
+        return HttpResponseRedirect("/signup/")
+
+    if request.POST:
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = form.login(request)
+
+            if user:
+                auth.login(request, user)
+                return HttpResponseRedirect("/patient_list/")
+
+    return render(request, 'index.html', {'login_form': form})
+
 
 def home(request):
     return render(request, "index.html")
+
+def signup(request):
+
+    return render(request, "Sign_Up.html")

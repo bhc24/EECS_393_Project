@@ -162,12 +162,26 @@ body{
 			<div>Pamlla<span>Login</span></div>
 		</div>
 		<br>
+		{% block content %}
+			{% if form.non_field_errors %}
+			<p> Your username and passphrase didn't match. Please try again.</p>
+			{% endif %}
 		<div class="login">
-				<input type="text" placeholder="username" name="user"><br>
-				<input type="password" placeholder="passphrase" name="passphrase"><br>
-				<input type="button" value="Login">
-				<input type="button" value="Sign Up" onclick="location.href='Sign_Up.html'">
+			<form method="post" action="">
+			{% csrf_token %}
+				<label for="username">User name:</label>
+				<input type="text" name="username" value="" id="username">
+				<label for="password">Password:</label>
+				<input type="password" name="password" value="" id="password">
+
+				<input type="submit" value="Login" />
+				<input type="hidden" name="login" value="Patient_List.html" />
+				
+				<input type="submit" value="Sign Up" />
+				<input type="hidden" name="sign_up" value="Sign_Up.html" />
+			</form>
 		</div>
+		{% endblock %}
 
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
 
