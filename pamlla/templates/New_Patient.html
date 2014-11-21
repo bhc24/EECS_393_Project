@@ -4,12 +4,7 @@
 <head>
 
   <meta charset="UTF-8">
-
-<<<<<<< HEAD
-  <title>PAMLLA Login</title>
-=======
   <title>New Patient</title>
->>>>>>> 70e19607f83763268cb9ed0d750c6130d5f8126b
 
     <style>
 @import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
@@ -174,24 +169,18 @@ body{
 </head>
 
 <body>
-<<<<<<< HEAD
-  <form action="/patient_list/" method= "post">
-      <div class="body"></div>
-            <div class="grad"></div>
-            <div class="header">
-                <div>New Patient<span></span></div>
-            </div>
-            <br>
-            {% if empty_error == True %}
-                <!--Display error message here.-->
-                <div>Please make sure all fields are complete</div>
-            {% endif %}
-            <div class="login">
-                    <input type="text" placeholder="User Name" name="User Name"><br>
-                    <input type="text" placeholder="Patient Name" name="Patient Name"><br>
-                    <input type="password" placeholder="Patient ID" name="Patient ID"><br>
-                    <input type="button" value="Add Patient">
-            </div>
+  {% if form.errors %}
+    <p style="color: red;">
+        Please correct the error{{ form.errors|pluralize }} below.
+    </p>
+  {% endif %}
+
+  <form action="/add_patient/" method= "post">
+    <table>
+        {{form.as_table}}
+    </table>
+    {% csrf_token %}
+    <input type="submit" value="Submit">
   </form>
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
 
