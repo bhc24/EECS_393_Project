@@ -164,7 +164,7 @@ body{
 		<br>
 		<div class="login">
 				<center>
-				<table border=2 width=260 cellspacing=5 cellpadding=8 bgcolor=gray>
+				<table id="patient_list" border=2 width=260 cellspacing=5 cellpadding=8 bgcolor=gray>
                     {% for patient in patient_list%}
                         <tr><td><a href="Patient_Analyze.html">{{patient.name}}</a></td></tr>
                     {% empty %}
