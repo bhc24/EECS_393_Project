@@ -36,10 +36,9 @@ def history(request):
     return render(request, "Patient_History.html")
 
 def login_view(request):
-    form = LoginForm(request.POST or None)
-
     # if 'sign_up' in request.POST:
     #     return HttpResponseRedirect("/signup/")
+    form = LoginForm(request.POST or None)
 
     if request.POST:
         form = LoginForm(request.POST)
@@ -49,7 +48,6 @@ def login_view(request):
             if user:
                 auth.login(request, user)
                 return HttpResponseRedirect("/patient_list/")
-
     return render(request, 'index.html', {'login_form': form})
 
 
