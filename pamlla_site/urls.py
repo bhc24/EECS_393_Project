@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-
+admin.autodiscover()
 from pamlla.views import patients, add_patient, login, home, history
 
 urlpatterns = patterns('',

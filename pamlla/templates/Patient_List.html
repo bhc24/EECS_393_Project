@@ -171,7 +171,9 @@ body{
                         <tr><td>No Patients</td></tr>
                     {% endfor %}
 				</table></center>
-				<input type="button" value="Add New Patient" onclick="location.href='New_Patient.html'">
+                <form action="/add_patient/">
+                    <input type="submit" value="Add New Patient">
+                </form>
 		</div>
 
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>

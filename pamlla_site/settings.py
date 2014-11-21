@@ -90,3 +90,8 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_DIRS = ('templates/',)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.csrf',
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',)
