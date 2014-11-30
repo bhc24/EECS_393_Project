@@ -193,22 +193,19 @@ body{
 			{% csrf_token %}
 				<label for="username">User name:</label>
 				<input type="text" name="username" value="" id="username">
+
 				<label for="password">Password:</label>
 				<input type="password" name="password" value="" id="password">
 
-<<<<<<< HEAD
-				<input type="submit" value="Login" name="login" />
-				<input type="hidden" value="Patient_List.html" />
-				
-				<input type="submit" value="Sign Up" name="sign_up" />
-				<input type="hidden" value="Sign_Up.html" />
-=======
 				<input type="submit" value="Login" id="login_button"/>
 				<input type="hidden" name="login" value="/patient_list/" />
 				
 				<input type="submit" value="Sign Up" id="sign_up_button" />
 				<input type="hidden" name="sign_up" value="Sign_Up.html" />
+<<<<<<< HEAD
 
+=======
+>>>>>>> 30c4132b16a87156f45b3c3fa8c8d6d9c568e217
 			</form>
 		</div>
 		{% endblock %}
