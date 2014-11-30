@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8">
 
-  <title>Random Login Form - CodePen</title>
+  <title>Sign Up</title>
 
     <style>
 @import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
@@ -67,12 +67,22 @@ body{
 	color: #5379fa !important;
 }
 
+.error_message{
+		position: absolute;
+		top: calc(50% - 75px);
+		left: calc(50% - 50px);
+		height: 150px;
+		width: 350px;
+		padding: 10px;
+		z-index: 2;
+}
+
 .login{
 	position: absolute;
-	top: calc(50% - 75px);
+	top: calc(70% - 75px);
 	left: calc(50% - 50px);
 	height: 150px;
-	width: 350px;
+	width: 450px;
 	padding: 10px;
 	z-index: 2;
 }
@@ -163,19 +173,32 @@ body{
 		</div>
 		<br>
 		{% block content %}
-			{% if form.non_field_errors %}
-			<p> Your username and passphrase didn't match. Please try again.</p>
-			{% endif %}
+			{% if form.errors %}
+  				{% for field in form %}
+  					{% for error in field.errors %}
+						<div class="error_message">
+							<strong>{{ error|escape }}</strong>
+						</div>
+  					{% endfor %}
+  				{% endfor %}
+				{% for error in form.non_field_errors %}
+					<div class="error_message">
+						<strong>{{ error|escape }}</strong>
+					</div>
+				{% endfor %}
+  			{% endif %}
 		<div class="login">
 			<form method="post" action="">
 			{% csrf_token %}
-				<input type="text" placeholder="name" name="name" id="name"><br>
+				<label for="username">Username:</label>
 				<input type="text" placeholder="username" name="username" id="username"><br>
+				<label for="passphrase">Passphrase:</label>
 				<input type="password" placeholder="passphrase" name="passphrase" id="passphrase"><br>
+				<label for="confirm passphrase">Confirm Passphrase:</label>
 				<input type="password" placeholder="confirm passphrase" name ="confirm passphrase" id="confirm passphrase"><br>
-				
+
 				<input type="submit" value="Sign Up" />
-				<input type="hidden" name="sign_up" value="login" />
+				<input type="hidden" name="sign_up" value="Patient_List.html" />
 			</form>
 		</div>
 		{% endblock %}
@@ -184,3 +207,4 @@ body{
 </body>
 
 </html>
+

@@ -1,6 +1,8 @@
 __author__ = 'stephaniehippo'
 from django import forms
 from django.contrib import auth
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class NewPatientForm(forms.Form):
     username = forms.CharField(label="User Name")
@@ -28,34 +30,37 @@ class LoginForm(forms.Form):
         return user
 
 
-class SignUpForm(forms.Form):
-    name = forms.CharField(label="Name")
-    username = forms.CharField(label="User Name")
-    passphrase1 = forms.CharField(widget=forms.PasswordInput(), label="passphrase")
-    passphrase2 = forms.CharField(widget=forms.PasswordInput(), label="confirm passphrase")
+class SignUpForm(UserCreationForm):
+    username = forms.CharField(required=True)
+    passphrase = forms.CharField(widget=forms.PasswordInput(), required=True)
+    confirm_passphrase = forms.CharField(widget=forms.PasswordInput(), required=True)
 
-    def verify_passphrase(self, request):
+    def __init__(self, *args, **kwargs):
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+        self.fields.keyOrder = ['username', 'password1', 'password2']
+
+    def verify_passphrase(self):
         passphrase1 = self.cleaned_data.get('passphrase')
-        passphrase2 = self.cleaned_data.get('confirm passphrase')
+        passphrase2 = self.cleaned_data.get('confirm_passphrase')
 
         if(passphrase1 != passphrase2):
             raise forms.ValidationError("Passphrases do not match")
 
-        return self.cleaned_data
+        return True
 
+    def clean(self, *args, **kwargs):
+        cleaned_data = super(UserCreationForm, self).clean()
 
+        return cleaned_data
 
-    # def clean(self):
-    #     passphrase1 = self.cleaned_data.get("passphrase")
-    #     passphrase2 = self.cleaned_data.get("confirmed passphrase")
-    #
-    #     if passphrase1 and passphrase1 != passphrase2:
-    #         raise forms.ValidationError("Passphrases do not match")
-    #
-    #     return self.clean_data
+    def save(self, commit=True):
+        user = super(UserCreationForm, self).save(commit)
 
-    def add_user(self, request):
-        name = self.cleaned_data.get('name')
-        username = self.cleaned_data('username')
-        passphrase = self.cleaned_data
+        if user:
+            user.username=self.cleaned_data['username']
+            user.set_password(self.cleaned_data['passphrase'])
 
+            if commit:
+                user.save()
+
+        return user

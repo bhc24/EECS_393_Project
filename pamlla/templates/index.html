@@ -67,9 +67,19 @@ body{
 	color: #5379fa !important;
 }
 
+.error_message{
+		position: absolute;
+		top: calc(50% - 75px);
+		left: calc(50% - 50px);
+		height: 150px;
+		width: 350px;
+		padding: 10px;
+		z-index: 2;
+}
+
 .login{
 	position: absolute;
-	top: calc(50% - 75px);
+	top: calc(70% - 75px);
 	left: calc(50% - 50px);
 	height: 150px;
 	width: 350px;
@@ -163,9 +173,21 @@ body{
 		</div>
 		<br>
 		{% block content %}
-			{% if form.non_field_errors %}
-			<p> Your username and passphrase didn't match. Please try again.</p>
-			{% endif %}
+			{% if form.errors %}
+  				{% for field in form %}
+  					{% for error in field.errors %}
+						<div class="error_message">
+							<strong>{{ error|escape }}</strong>
+						</div>
+  					{% endfor %}
+  				{% endfor %}
+				{% for error in form.non_field_errors %}
+					<div class="error_message">
+						<strong>{{ error|escape }}</strong>
+					</div>
+				{% endfor %}
+  			{% endif %}
+
 		<div class="login">
 			<form method="post" action="">
 			{% csrf_token %}
@@ -174,11 +196,11 @@ body{
 				<label for="password">Password:</label>
 				<input type="password" name="password" value="" id="password">
 
-				<input type="submit" value="Login" />
-				<input type="hidden" name="login" value="Patient_List.html" />
+				<input type="submit" value="Login" name="login" />
+				<input type="hidden" value="Patient_List.html" />
 				
-				<input type="submit" value="Sign Up" />
-				<input type="hidden" name="sign_up" value="Sign_Up.html" />
+				<input type="submit" value="Sign Up" name="sign_up" />
+				<input type="hidden" value="Sign_Up.html" />
 			</form>
 		</div>
 		{% endblock %}

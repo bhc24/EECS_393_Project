@@ -66,8 +66,8 @@ body{
 
 .table{
 	position: absolute;
-	top: calc(250%);
-	left: calc(1%);
+	top: calc(80%);
+	left: calc(25% - 50px);
 	height: 150px;
 	width: 350px;
 	padding: 10px;
@@ -108,43 +108,43 @@ body{
 	</head>
  
 	<body>
-		<div class="body"/>
-			<div class="header">
-				<div>Fake Patient's history</div>
-			</div>
-			
-			<div class="kmplot"/>
-				<div>Latest Report 11/21/2014<div>
-				<img src="../../Scripts/coxsurvival.png" alt="some text" style="width: 150%; height: 225%"/>
-			</div>
-			
-			<div class="table" id="variant_table"/>
+        <div class="header">
+            <div>Fake Patient's history</div>
+        </div>
+
+        <div class="kmplot">
+            <div>Latest Report 11/21/2014</div>
+            <img src="coxsurvival.png" alt="I don't need no KM Plot to know this guys is fuuuuuuuuucked" style="width: 150%; height: 225%"/>
+        </div>
+
+        <div class="table" id="variant_table"/>
 	</body>
 </html>
 
-<body>
+<!--<body>-->
 
-  <div class="body"></div>
-		<div class="grad"></div>
-		<div class="header">
-			<div>Fake Patient's History<span></span></div>
-		</div>
-		<div class="login">
-            {% for history in histories%}
-                <div>{{ history.date }}</div>
-                <!--Graph here. Pass data points. -->
-                <div></div>
-		    {% endfor %}
-        </div>
+  <!--<div class="body"></div>-->
+		<!--<div class="grad"></div>-->
+		<!--<div class="header">-->
+			<!--<div>Fake Patient's History<span></span></div>-->
+		<!--</div>-->
+		<!--<div class="login">-->
+            <!--{% for history in histories%}-->
+                <!--<div>{{ history.date }}</div>-->
+                <!--&lt;!&ndash;Graph here. Pass data points. &ndash;&gt;-->
+                <!--<div></div>-->
+		    <!--{% endfor %}-->
+        <!--</div>-->
 
-		<div>Latest Report 10/31/2014</div>
-			<img src="../../../Scripts/coxsurvival.png" alt="some text" style="width: 150%; height: 225%"/>
-		</div>
-</body>
-				
-		
-		
-		
+		<!--<div>Latest Report 10/31/2014</div>-->
+			<!--<img src="coxsurvival.png" alt="some text" style="width: 150%; height: 225%"/>-->
+		<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
 		
 		
 		
