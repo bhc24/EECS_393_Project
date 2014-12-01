@@ -17,6 +17,9 @@ urlpatterns = patterns('',
     url(r'^home/', views.patients),
     url(r'^history/', views.history),
     url(r'^signup/', views.register),
+<<<<<<< HEAD
     url(r'^logout/', views.logout_view),
+=======
+>>>>>>> bde0fe8182eed6506c3ac0e626babde616e51533
     url(r'^$', views.login_view)
 )
