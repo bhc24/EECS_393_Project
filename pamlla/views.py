@@ -5,15 +5,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, loader
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 from pamlla.forms import NewPatientForm, LoginForm, UserForm, UserProfileForm
 from pamlla.models import UserProfile, Patient, Doctor, Prediction, Logit, HazardFunction, MutatedGenes, SurvivalFactors
 # Create your views here.
 
 @login_required(login_url='/login/')
 def patients(request):
-    print(request.POST)
-    print()
-    print()
+
 
     patient_list = Patient.objects.all()
     return render(request, "Patient_List.html", {'patient_list': patient_list})
@@ -110,6 +110,10 @@ def register(request):
             profile.save()
 
             registered = True
+
+            if profile.isDoctor:
+                mygroup, created = Group.objects.get_or_create(name=user.username)
+
 
             return HttpResponseRedirect('/patient_list/')
     else:
