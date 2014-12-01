@@ -45,8 +45,10 @@ def add_patient(request):
                 new_patient=Patient(name=cd['patient_name'], patient=user)
                 new_patient.save()
                 id = new_patient.id
+                #TODO: Fill in histories with test data
+                histories=[]
                 #TODO: Redirect to that patient's specific id.
-                return HttpResponseRedirect('/history/')
+                return render(request, 'Patient_History.html', {'histories': histories})
             else:
                 errors += ["A user must be either a doctor or a patient, but not both."]
 
