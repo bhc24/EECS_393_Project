@@ -69,9 +69,19 @@ body{
 
 .error_message{
 		position: absolute;
-		top: calc(50% - 75px);
+		top: calc(40% - 75px);
 		left: calc(50% - 50px);
-		height: 150px;
+		height: 75px;
+		width: 350px;
+		padding: 10px;
+		z-index: 2;
+}
+
+.error_message2{
+		position absolute;
+		top: calc(60% - 75px);
+		left: calc(50% - 50px);
+		height: 75px;
 		width: 350px;
 		padding: 10px;
 		z-index: 2;
@@ -182,7 +192,7 @@ body{
   					{% endfor %}
   				{% endfor %}
 				{% for error in form.non_field_errors %}
-					<div class="error_message">
+					<div class="error_message2">
 						<strong>{{ error|escape }}</strong>
 					</div>
 				{% endfor %}
