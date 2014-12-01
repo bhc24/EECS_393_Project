@@ -109,16 +109,23 @@ body{
 	</head>
  
 	<body>
-        <div class="header">
-            <div>Fake Patient's history</div>
-        </div>
 
-        <div class="kmplot">
-            <div>Latest Report 11/21/2014</div>
-            <img src="coxsurvival.png" alt="I don't need no KM Plot to know this guys is fuuuuuuuuucked" style="width: 150%; height: 225%"/>
-        </div>
+        {%for prediction in prediction%}
+            <p>Picture will be here eventually</p>
+            <div class="table" id="variant_table"></div>
+        {%empty%}
+            <p>No Predictions to display yet.</p>
+        {%endfor%}
+        <!--<div class="header">-->
+            <!--<div>Fake Patient's history</div>-->
+        <!--</div>-->
 
-        <div class="table" id="variant_table"></div>
+        <!--<div class="kmplot">-->
+            <!--<div>Latest Report 11/21/2014</div>-->
+            <!--<img src="./img/coxsurvival.png" style="width: 150%; height: 225%"/>-->
+        <!--</div>-->
+
+        <!--<div class="table" id="variant_table"></div>-->
 
 	</body>
 </html>
