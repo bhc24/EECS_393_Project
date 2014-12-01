@@ -28,7 +28,7 @@ def add_patient(request):
         #Check existence of patient name
         if form.is_valid():
             cd = form.cleaned_data
-            user = User(username=cd['username'], passphrase=cd['password'])
+            user = User(username=cd['username'], password=cd['password'])
             user.save()
             user_profile=UserProfile(user=user, name=cd['patient_name'], isPatient=True, isDoctor=False)
             user_profile.save()
