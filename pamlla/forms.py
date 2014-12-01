@@ -32,7 +32,7 @@ class LoginForm(forms.Form):
 
 class SignUpForm(UserCreationForm):
     username = forms.CharField(required=True, label='Username')
-    passphrase = forms.CharField(widget=forms.PasswordInput(), required=True, lablel='Passphrase')
+    passphrase = forms.CharField(widget=forms.PasswordInput(), required=True, label='Passphrase')
     confirm_passphrase = forms.CharField(widget=forms.PasswordInput(), required=True, label='Confirm passphrase')
 
     # def __init__(self, *args, **kwargs):
