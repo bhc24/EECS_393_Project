@@ -78,7 +78,9 @@ def signup_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = User.objects.create_user
+            user = User.objects.create_user(form.cleaned_data['username'], None, form.cleaned_data['passphrase'])
+            user.save()
+            return
 
 
     # form = SignUpForm(request.POST or None)
