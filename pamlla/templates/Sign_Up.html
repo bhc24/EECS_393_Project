@@ -80,9 +80,9 @@ body{
 .login{
 	position: absolute;
 	top: calc(70% - 75px);
-	left: calc(50% - 50px);
+	left: calc(25% - 50px);
 	height: 150px;
-	width: 450px;
+	width: 700px;
 	padding: 10px;
 	z-index: 2;
 }
@@ -172,39 +172,30 @@ body{
 			<div>Sign Up<span></span></div>
 		</div>
 		<br>
-		{% block content %}
-			{% if form.errors %}
-  				{% for field in form %}
-  					{% for error in field.errors %}
-						<div class="error_message">
-							<strong>{{ error|escape }}</strong>
-						</div>
-  					{% endfor %}
-  				{% endfor %}
-				{% for error in form.non_field_errors %}
-					<div class="error_message">
-						<strong>{{ error|escape }}</strong>
-					</div>
-				{% endfor %}
-  			{% endif %}
 		<div class="login">
-			<form method="post" action="">
+			<form id="user_form" method="post" action="">
 			{% csrf_token %}
-				<label for="username">Username:</label>
-				<input type="text" placeholder="username" name="username" id="username"><br>
-				<label for="passphrase">Passphrase:</label>
-				<input type="password" placeholder="passphrase" name="passphrase" id="passphrase"><br>
-				<label for="confirm passphrase">Confirm Passphrase:</label>
-				<input type="password" placeholder="confirm passphrase" name ="confirm passphrase" id="confirm passphrase"><br>
+				{{ user_form.as_p }}
+				{{ profile_form.as_p }}
 
-				<input type="submit" value="Sign Up" />
-				<input type="hidden" name="sign_up" value="Patient_List.html" />
+				<input type="submit" name="submit" value="Register">
 			</form>
 		</div>
-		{% endblock %}
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
 
 </body>
 
+<!--<label for="username">Username:</label>-->
+				<!--<input type="text" placeholder="username" name="username" id="username"><br>-->
+				<!--<label for="passphrase">Passphrase:</label>-->
+				<!--<input type="password" placeholder="passphrase" name="passphrase" id="passphrase"><br>-->
+				<!--<label for="confirm passphrase">Confirm Passphrase:</label>-->
+				<!--<input type="password" placeholder="confirm passphrase" name ="confirm passphrase" id="confirm passphrase"><br>-->
+
+				<!--<input type="submit" value="Sign Up" />-->
+				<!--<input type="hidden" name="sign_up" value="Patient_List.html" />-->
+
 </html>
+
+
 

@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from pamlla.views import patients, add_patient, login_view, home, history, signup_view
+from pamlla.views import patients, add_patient, login_view, home, history, register
 
 
 admin.autodiscover()
@@ -15,6 +15,6 @@ urlpatterns = patterns('',
     url(r'^login/', login_view),
     url(r'^home/', patients),
     url(r'^history/', history),
-    url(r'^signup/', signup_view),
+    url(r'^signup/', register),
     url(r'^$', login_view)
 )

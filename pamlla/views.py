@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, loader
-from pamlla.forms import NewPatientForm, LoginForm, SignUpForm
+from pamlla.forms import NewPatientForm, LoginForm, UserForm, UserProfileForm
 from pamlla.models import Patient, Doctor, Prediction, Logit, HazardFunction, MutatedGenes, SurvivalFactors
 # Create your views here.
 
@@ -68,40 +68,33 @@ def login_view(request):
 def home(request):
     return render(request, "index.html")
 
-def signup_view(request):
 
-    print(request.POST)
-    print()
-    print()
-    print()
+def register(request):
+
+    registered = False
 
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = User.objects.create_user(form.cleaned_data['username'], None, form.cleaned_data['passphrase'])
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileForm(data=request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+
+            user.set_password(user.password)
             user.save()
-            return
 
+            profile = profile_form.save(commit=False)
+            profile.user = user
 
-    # form = SignUpForm(request.POST or None)
-    #
-    # if request.POST:
-    #     form = SignUpForm(request.POST)
-    #
-    #     if form.is_valid():
-    #
-    #         if form.verify_passphrase():
-    #             user = form.add_user(request)
-    #
-    #             if user:
-    #
-    #                 auth.login(request, user)
-    #                 return HttpResponseRedirect("/patient_list/")
-    #             else:
-    #                 print("blank user")
-    #         else:
-    #             print("mismatched passphrase")
-    #     else:
-    #         print("invalid form")
-    #
-    # return render(request, "Sign_Up.html", {'form': form,})
+            profile.save()
+
+            registered = True
+    else:
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+
+    return render(request, 'Sign_Up.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+
+def signup_view(request):
+
+    pass
