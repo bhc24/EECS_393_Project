@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, loader
 from pamlla.forms import NewPatientForm, LoginForm, UserForm, UserProfileForm
-from pamlla.models import Patient, Doctor, Prediction, Logit, HazardFunction, MutatedGenes, SurvivalFactors
+from pamlla.models import UserProfile, Patient, Doctor, Prediction, Logit, HazardFunction, MutatedGenes, SurvivalFactors
 # Create your views here.
 
 @login_required(login_url='/login/')
@@ -32,13 +32,28 @@ def add_patient(request):
             cd = form.cleaned_data
             user = User(username=cd['username'], password=cd['password'])
             user.save()
-            new_patient=Patient(name=cd['patient_name'], patient=user)
-            new_patient.save()
-            return HttpResponseRedirect('/patient_list/')
+            user_profile=None
+            if 'isDoctor' in request.POST and 'isPatient' not in request.POST:
+                user_profile = UserProfile(user=user, isDoctor= True, isPatient=False)
+                user_profile.save()
+                new_doctor=Doctor(name=cd['name'], patient=user)
+                new_doctor.save()
+                return HttpResponseRedirect('/patient_list/')
+            elif 'isPatient' in request.POST and 'isDoctor' not in request.POST:
+                user_profile = UserProfile(user=user, isDoctor= False, isPatient=True)
+                user_profile.save()
+                new_patient=Patient(name=cd['patient_name'], patient=user)
+                new_patient.save()
+                id = new_patient.id
+                #TODO: Redirect to that patient's specific id.
+                return HttpResponseRedirect('/history/')
+            else:
+                errors += ["A user must be either a doctor or a patient, but not both."]
+
     form=NewPatientForm(
         initial={'username': "User Name", 'patient_name': "Patient Name"}
     )
-    return render(request, "New_Patient.html", {'form':form})
+    return render(request, "New_Patient.html", {'form':form, 'errors': errors})
 
 @login_required(login_url='/login/')
 def history(request):
