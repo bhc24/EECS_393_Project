@@ -30,32 +30,15 @@ def add_patient(request):
         #Check existence of patient name
         if form.is_valid():
             cd = form.cleaned_data
-            user = User(username=cd['username'], password=cd['password'])
+            user = User(username=cd['username'], passphrase=cd['password'])
             user.save()
-            user_profile=None
-            if 'isDoctor' in request.POST and 'isPatient' not in request.POST:
-                user_profile = UserProfile(user=user, isDoctor= True, isPatient=False)
-                user_profile.save()
-                new_doctor=Doctor(name=cd['name'], patient=user)
-                new_doctor.save()
-                return HttpResponseRedirect('/patient_list/')
-            elif 'isPatient' in request.POST and 'isDoctor' not in request.POST:
-                user_profile = UserProfile(user=user, isDoctor= False, isPatient=True)
-                user_profile.save()
-                new_patient=Patient(name=cd['patient_name'], patient=user)
-                new_patient.save()
-                id = new_patient.id
-                #TODO: Fill in histories with test data
-                histories=[]
-                #TODO: Redirect to that patient's specific id.
-                return render(request, 'Patient_History.html', {'histories': histories})
-            else:
-                errors += ["A user must be either a doctor or a patient, but not both."]
-
+            new_patient=Patient(name=cd['patient_name'], patient=user)
+            new_patient.save()
+            return HttpResponseRedirect('/patient_list/')
     form=NewPatientForm(
         initial={'username': "User Name", 'patient_name': "Patient Name"}
     )
-    return render(request, "New_Patient.html", {'form':form, 'errors': errors})
+    return render(request, "New_Patient.html", {'form':form})
 
 @login_required(login_url='/login/')
 def history(request):
@@ -91,7 +74,7 @@ def home(request):
 
 
 def register(request):
-
+    errors = []
     registered = False
 
     if request.method == 'POST':
@@ -100,27 +83,33 @@ def register(request):
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-
             user.set_password(user.password)
             user.save()
-
             profile = profile_form.save(commit=False)
             profile.user = user
-
             profile.save()
-
             registered = True
-
-            if profile.isDoctor:
+            if profile.isDoctor and not profile.isPatient:
+                new_doctor=Doctor(name=profile.name, doctor=profile)
+                new_doctor.save()
                 mygroup, created = Group.objects.get_or_create(name=user.username)
-
-
-            return HttpResponseRedirect('/patient_list/')
+                return HttpResponseRedirect('/patient_list/')
+            elif not profile.isDoctor and profile.isPatient:
+                new_patient=Patient(name=profile.name, patient=profile)
+                new_patient.save()
+                id = new_patient.id
+                #TODO: Fill in histories with test data
+                histories=[]
+                #TODO: Redirect to that patient's specific id.
+          #      return HttpResponseRedirect('/history/')
+                return render(request, 'Patient_History.html', {'histories': histories})
+            else:
+                errors += ["A user must be either a doctor or a patient, but not both."]
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'Sign_Up.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'Sign_Up.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered, 'errors': errors})
 
 def logout_view(request):
     auth.logout(request)

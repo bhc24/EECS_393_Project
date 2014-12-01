@@ -61,6 +61,8 @@ class MutatedGenes(models.Model):
     gene_name = models.CharField(max_length=45)
     meth_score = models.DecimalField(max_digits=4,decimal_places=3)
     logit = models.ForeignKey('Logit') #many_to_one relationship
+    data_type = models.CharField(max_length=10, default="Unknown")
+    coefficient_value = models.DecimalField(max_digits=7, decimal_places=5, default=1.00000)
 
     def __unicode__(self): # pragma: no cover
         return u'%s %s' % (self.gene_name, self.meth_score)
