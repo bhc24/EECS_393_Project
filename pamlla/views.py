@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib import auth, sessions
-from django.contrib
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -78,7 +78,9 @@ def signup_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = User.objects.create_user
+            user = User.objects.create_user(form.cleaned_data['username'], None, form.cleaned_data['passphrase'])
+            user.save()
+            return
 
 
     # form = SignUpForm(request.POST or None)
