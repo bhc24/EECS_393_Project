@@ -30,7 +30,7 @@ def add_patient(request):
             user.save()
             new_patient=Patient(name=cd['patient_name'], patient=user)
             new_patient.save()
-        return HttpResponseRedirect('/patients/')
+            return HttpResponseRedirect('/patient_list/')
     form=NewPatientForm(
         initial={'username': "User Name", 'patient_name': "Patient Name"}
     )
