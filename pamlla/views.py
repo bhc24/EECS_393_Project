@@ -11,6 +11,10 @@ from pamlla.models import Patient, Doctor, Prediction, Logit, HazardFunction, Mu
 
 @login_required(login_url='/login/')
 def patients(request):
+    print(request.POST)
+    print()
+    print()
+
     patient_list = Patient.objects.all()
     return render(request, "Patient_List.html", {'patient_list': patient_list})
 
