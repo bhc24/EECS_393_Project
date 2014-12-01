@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from django.shortcuts import redirect
 from django.contrib import auth, sessions
+from django.contrib
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, loader
 from pamlla.forms import NewPatientForm, LoginForm, SignUpForm
-from pamlla.models import Patient, User, Doctor, Prediction, Logit, HazardFunction, MutatedGenes, SurvivalFactors
+from pamlla.models import Patient, Doctor, Prediction, Logit, HazardFunction, MutatedGenes, SurvivalFactors
 # Create your views here.
 
 @login_required(login_url='/login/')
@@ -42,8 +43,6 @@ def history(request):
 
 def login_view(request):
 
-    auth.logout(request)
-
     print(request.POST)
     print()
     print()
@@ -76,25 +75,31 @@ def signup_view(request):
     print()
     print()
 
-    form = SignUpForm(request.POST or None)
-
-    if request.POST:
-        form = SignUpForm(request.POST)
-
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
         if form.is_valid():
+            user = User.objects.create_user
 
-            if form.verify_passphrase():
-                user = form.add_user(request)
 
-                if user:
-
-                    auth.login(request, user)
-                    return HttpResponseRedirect("/patient_list/")
-                else:
-                    print("blank user")
-            else:
-                print("mismatched passphrase")
-        else:
-            print("invalid form")
-
-    return render(request, "Sign_Up.html", {'form': form,})
+    # form = SignUpForm(request.POST or None)
+    #
+    # if request.POST:
+    #     form = SignUpForm(request.POST)
+    #
+    #     if form.is_valid():
+    #
+    #         if form.verify_passphrase():
+    #             user = form.add_user(request)
+    #
+    #             if user:
+    #
+    #                 auth.login(request, user)
+    #                 return HttpResponseRedirect("/patient_list/")
+    #             else:
+    #                 print("blank user")
+    #         else:
+    #             print("mismatched passphrase")
+    #     else:
+    #         print("invalid form")
+    #
+    # return render(request, "Sign_Up.html", {'form': form,})
