@@ -2,23 +2,28 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class User(models.Model):
-    username = models.CharField(max_length=20)
-    passphrase = models.CharField(max_length=100)
+# 1. Created OneToOneField between the library User object and our UserProfile model
+# 2. Created extra fields: isDoctor and isPatient
+# 3. Go to admin.py
+class UserProfile(models.Model):
+
+    user = models.OneToOneField(User)
+    isDoctor = models.BooleanField(default=True)
+    isPatient = models.BooleanField(default=False)
 
     def __unicode__(self): # pragma: no cover
-        return self.username
+        return self.user.username
 
 class Patient(models.Model):
     name = models.CharField(max_length=45)
-    patient = models.ForeignKey('User')
+    patient = models.ForeignKey('UserProfile')
 
     def __unicode__(self):  # pragma: no cover
         return self.name
 
 class Doctor(models.Model):
     name = models.CharField(max_length=45)
-    doctor = models.ForeignKey('User')
+    doctor = models.ForeignKey('UserProfile')
 
     def __unicode__(self): # pragma: no cover
         return self.name

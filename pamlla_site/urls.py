@@ -3,6 +3,7 @@ from django.contrib import admin
 from pamlla import views
 
 
+
 admin.autodiscover()
 
 #TODO: Pass patient arguments

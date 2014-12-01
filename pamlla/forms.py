@@ -2,7 +2,8 @@ __author__ = 'stephaniehippo'
 from django import forms
 from django.contrib import auth
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from pamlla.models import UserProfile
+
 
 class NewPatientForm(forms.Form):
     username = forms.CharField(label="User Name")
@@ -29,38 +30,20 @@ class LoginForm(forms.Form):
         user = auth.authenticate(username=username, password=password)
         return user
 
+# 1. Create the two forms to be used with the view
+# 1.1 Meta adds extra information about the user and user profile
+# 1.2 I'm a little shakey on how forms work
+# 2. Go to views.py
 
-class SignUpForm(UserCreationForm):
-    username = forms.CharField(required=True, label='Username')
-    passphrase = forms.CharField(widget=forms.PasswordInput(), required=True, label='Passphrase')
-    confirm_passphrase = forms.CharField(widget=forms.PasswordInput(), required=True, label='Confirm passphrase')
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
 
-    # def __init__(self, *args, **kwargs):
-    #     super(UserCreationForm, self).__init__(*args, **kwargs)
-    #     self.fields.keyOrder = ['username', 'password1', 'password2']
-    #
-    # def verify_passphrase(self):
-    #     passphrase1 = self.cleaned_data.get('passphrase')
-    #     passphrase2 = self.cleaned_data.get('confirm_passphrase')
-    #
-    #     if(passphrase1 != passphrase2):
-    #         raise forms.ValidationError("Passphrases do not match")
-    #
-    #     return True
-    #
-    # def clean(self, *args, **kwargs):
-    #     cleaned_data = super(UserCreationForm, self).clean()
-    #
-    #     return cleaned_data
-    #
-    # def save(self, commit=True):
-    #     user = super(UserCreationForm, self).save(commit)
-    #
-    #     if user:
-    #         user.username=self.cleaned_data['username']
-    #         user.set_password(self.cleaned_data['passphrase'])
-    #
-    #         if commit:
-    #             user.save()
-    #
-    #     return user
+    class Meta:
+        model = User
+        fields = ('username', 'password')
+
+class UserProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ('isDoctor', 'isPatient')
