@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     url(r'^add_patient/', views.add_patient),
     url(r'^login/', views.login_view),
     url(r'^home/', views.patients),
-    url(r'^history/', views.history),
+    url(r'^history/(?P<patient_id>\w{0,50})', views.history),
     url(r'^signup/', views.register),
     url(r'^logout/', views.logout_view),
     url(r'^$', views.login_view)

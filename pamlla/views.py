@@ -50,9 +50,34 @@ def add_patient(request):
     return render(request, "New_Patient.html", {'form':form})
 
 @login_required(login_url='/login/')
-def history(request):
-    #Get all histories for a particular patient
-    return render(request, "Patient_History.html")
+def history(request, patient_id):
+    user=User.objects.get(id=request.user.id)
+    #Assume its a doctor?
+    user=User.objects.get(id=request.user.id)
+    profile = UserProfile.objects.get(user=user)
+
+    patient = Patient.objects.get(id=patient_id)
+    patient_list = []
+    predictions = []
+    #get request comes with patient id
+    #Check if the doctor or patient has permission to view this id
+    if 'patient_id' in request.GET:
+        if profile.isDoctor:
+            doctor = Doctor.objects.get(doctor=profile)
+            patient_list = Patient.objects.filter(doctor=doctor)
+        elif profile.isPatient:
+            am_i_a_patient = Patient.objects.get(patient=profile)
+            if am_i_a_patient.id == patient_id:
+                patient_list = Patient.objects.filter(patient_id=patient_id)
+        if patient in patient_list:
+            #Authorized.
+            predictions = Prediction.filter(patient=patient)
+            #for patient in patient_list:
+                #Get all predictions for a particular patient
+                #Get all Data Sets for each history
+        #else:
+            # TODO: No permission to view, Force Logout?
+    return render(request, "Patient_History.html", {'predictions':predictions})
 
 def login_view(request):
     if 'sign_up' in request.POST:
