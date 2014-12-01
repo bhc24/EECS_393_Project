@@ -89,6 +89,8 @@ def register(request):
             profile.save()
 
             registered = True
+
+            return HttpResponseRedirect('/patient_list/')
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
