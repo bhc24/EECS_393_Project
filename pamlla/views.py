@@ -13,7 +13,13 @@ from pamlla.models import UserProfile, Patient, Doctor, Prediction, Logit, Hazar
 
 @login_required(login_url='/login/')
 def patients(request):
-    patient_list = Patient.objects.all()
+    #get the current active user
+    user=User.objects.get(id=request.user.id)
+    #Assume its a doctor?
+    user=User.objects.get(id=request.user.id)
+    doctor_profile = UserProfile.objects.get(user=user)
+    doctor = Doctor.objects.get(doctor=doctor_profile)
+    patient_list = Patient.objects.filter(doctor=doctor)
     return render(request, "Patient_List.html", {'patient_list': patient_list})
 
 @login_required(login_url='/login/')
@@ -65,7 +71,6 @@ def login_view(request):
                 return HttpResponseRedirect("/patient_list/")
 
     return render(request, 'index.html', {'form': form})
-
 
 def home(request):
     return render(request, "index.html")
