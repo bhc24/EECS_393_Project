@@ -13,8 +13,6 @@ from pamlla.models import UserProfile, Patient, Doctor, Prediction, Logit, Hazar
 
 @login_required(login_url='/login/')
 def patients(request):
-
-
     patient_list = Patient.objects.all()
     return render(request, "Patient_List.html", {'patient_list': patient_list})
 
@@ -32,7 +30,12 @@ def add_patient(request):
             cd = form.cleaned_data
             user = User(username=cd['username'], passphrase=cd['password'])
             user.save()
-            new_patient=Patient(name=cd['patient_name'], patient=user)
+            user_profile=UserProfile(user=user, name=cd['patient_name'], isPatient=True, isDoctor=False)
+            user_profile.save()
+            user=User.objects.get(request.user.user_id)
+            doctor_profile = UserProfile.get(user=user)
+            doctor = Doctor.get(doctor_profile)
+            new_patient=Patient(name=cd['patient_name'], patient=user_profile, doctor=doctor)
             new_patient.save()
             return HttpResponseRedirect('/patient_list/')
     form=NewPatientForm(
@@ -46,11 +49,6 @@ def history(request):
     return render(request, "Patient_History.html")
 
 def login_view(request):
-
-    print(request.POST)
-    print()
-    print()
-
     if 'sign_up' in request.POST:
         return HttpResponseRedirect("/signup/")
 
@@ -87,24 +85,13 @@ def register(request):
             user.save()
             profile = profile_form.save(commit=False)
             profile.user = user
-            profile.save()
             registered = True
             if profile.isDoctor and not profile.isPatient:
+                profile.save()
                 new_doctor=Doctor(name=profile.name, doctor=profile)
                 new_doctor.save()
-                mygroup, created = Group.objects.get_or_create(name=user.username)
+           #     mygroup, created = Group.objects.get_or_create(name=user.username)
                 return HttpResponseRedirect('/patient_list/')
-            elif not profile.isDoctor and profile.isPatient:
-                new_patient=Patient(name=profile.name, patient=profile)
-                new_patient.save()
-                id = new_patient.id
-                #TODO: Fill in histories with test data
-                histories=[]
-                #TODO: Redirect to that patient's specific id.
-          #      return HttpResponseRedirect('/history/')
-                return render(request, 'Patient_History.html', {'histories': histories})
-            else:
-                errors += ["A user must be either a doctor or a patient, but not both."]
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()

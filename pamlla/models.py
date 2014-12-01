@@ -6,12 +6,10 @@ from django.contrib.auth.models import User
 # 2. Created extra fields: isDoctor and isPatient
 # 3. Go to admin.py
 class UserProfile(models.Model):
-
     user = models.OneToOneField(User)
     name = models.CharField(max_length=30)
     isDoctor = models.BooleanField(default=True)
     isPatient = models.BooleanField(default=False)
-
 
     def __unicode__(self): # pragma: no cover
         return self.user.username
@@ -19,6 +17,7 @@ class UserProfile(models.Model):
 class Patient(models.Model):
     name = models.CharField(max_length=45)
     patient = models.ForeignKey('UserProfile')
+    doctor = models.ForeignKey('Doctor')
 
     def __unicode__(self):  # pragma: no cover
         return self.name
