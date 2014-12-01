@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib import auth, sessions
-from django.contrib
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
