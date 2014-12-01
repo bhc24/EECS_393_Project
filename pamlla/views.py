@@ -95,6 +95,7 @@ def register(request):
 
     return render(request, 'Sign_Up.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
-def signup_view(request):
+def logout_view(request):
+    auth.logout(request)
+    return render(request, 'Log_Out.html')
 
-    pass
