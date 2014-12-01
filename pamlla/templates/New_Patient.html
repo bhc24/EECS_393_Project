@@ -175,20 +175,20 @@ body{
         <div>Add New Patient<span></span></div>
         </div>
 		<br>
-  <form action="/add_patient/" method= "post">
-    {% if form.errors %}
-        <p style="color: red;">
-            Please correct the error{{ form.errors|pluralize }} below.
-        </p>
-    {% endif %}
+        <form action="/add_patient/" method= "post">
+            {% if form.errors %}
+                <p style="color: red;">
+                    Please correct the error{{ form.errors|pluralize }} below.
+                </p>
+            {% endif %}
 
-    {% csrf_token %}
-    <div class="login">
-        <table>
-            {{form.as_table}}
-        </table>
-        <input type="submit" value="Submit">
-    </div>
+            {% csrf_token %}
+            <div class="login">
+                <table>
+                    {{form.as_table}}
+                </table>
+                <input type="submit" value="Submit">
+            </div>
   </form>
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
 

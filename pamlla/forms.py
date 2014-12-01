@@ -48,4 +48,11 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('isDoctor', 'isPatient')
 
+<<<<<<< HEAD
+=======
+class SignUpForm(UserCreationForm):
+    username = forms.CharField(required=True, label='Username')
+    passphrase = forms.CharField(widget=forms.PasswordInput(), required=True, label='Passphrase')
+    confirm_passphrase = forms.CharField(widget=forms.PasswordInput(), required=True, label='Confirm passphrase')
+>>>>>>> 64855c6d022852bad80f5c06eeda5d172b0f34dc
 
