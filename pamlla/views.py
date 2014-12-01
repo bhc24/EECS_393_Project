@@ -8,7 +8,7 @@ from pamlla.forms import NewPatientForm, LoginForm, SignUpForm
 from pamlla.models import Patient, User, Doctor, Prediction, Logit, HazardFunction, MutatedGenes, SurvivalFactors
 # Create your views here.
 
-@login_required()
+@login_required(login_url='/login/')
 def patients(request):
     patient_list = Patient.objects.all()
     return render(request, "Patient_List.html", {'patient_list': patient_list})
@@ -35,7 +35,7 @@ def add_patient(request):
     )
     return render(request, "New_Patient.html", {'form':form})
 
-@login_required()
+@login_required(login_url='/login/')
 def history(request):
     #Get all histories for a particular patient
     return render(request, "Patient_History.html")
@@ -43,6 +43,11 @@ def history(request):
 def login_view(request):
 
     auth.logout(request)
+
+    print(request.POST)
+    print()
+    print()
+
     if 'sign_up' in request.POST:
         return HttpResponseRedirect("/signup/")
 
