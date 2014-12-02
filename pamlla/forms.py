@@ -2,7 +2,7 @@ __author__ = 'stephaniehippo'
 from django import forms
 from django.contrib import auth
 from django.contrib.auth.models import User
-from pamlla.models import UserProfile
+
 
 
 class NewPatientForm(forms.Form):
@@ -24,7 +24,7 @@ class LoginForm(forms.Form):
         return self.cleaned_data
 
 
-    def login(self, request):
+    def login(self):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
         user = auth.authenticate(username=username, password=password)
@@ -35,15 +35,18 @@ class LoginForm(forms.Form):
 # 1.2 I'm a little shakey on how forms work
 # 2. Go to views.py
 
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = User
-        fields = ('username', 'password')
+        fields = ('username', 'password', 'first_name', 'last_name')
 
-class UserProfileForm(forms.ModelForm):
 
-    class Meta:
-        model = UserProfile
-        fields = ('name', 'isDoctor', 'isPatient')
+class DocumentForm(forms.Form):
+    mutationfile = forms.FileField(label='Select a mutation file', help_text='CSV. max: 2 megabytes')
+    methfile = forms.FileField(label='Select a methylation file', help_text='CSV. max: 2 megabytes')
+    rnafile = forms.FileField(label='Select a rna seq file', help_text='CSV. max: 2 megabytes')
+
+
