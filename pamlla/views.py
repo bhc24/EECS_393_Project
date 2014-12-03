@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib import auth, sessions
+from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -77,6 +78,13 @@ def history(request, patient_id):
 
 
 def login_view(request):
+
+    logout(request)
+
+    print(request.POST)
+    print()
+    print()
+
     if 'sign_up' in request.POST:
         return HttpResponseRedirect("/signup/")
 
@@ -111,6 +119,7 @@ def register(request):
             user.set_password(user.password)
             user.save()
             registered = True
+            return HttpResponseRedirect('/login/')
 
     else:
         user_form = UserForm()
@@ -133,10 +142,10 @@ def analyze(request):
                 newdoc = Document(docfile = request.FILES[docfile])
                 newdoc.save()
 
-        else:
-            analyze_form = DocumentForm()
+    else:
+        analyze_form = DocumentForm()
 
-        documents = Document.objects.all()
+    documents = Document.objects.all()
 
-        return render(request, {'documents': documents, 'form': analyze_form})
+    return render(request, 'Patient_Analyze.html', {'documents': documents, 'form': analyze_form})
 
