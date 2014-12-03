@@ -201,11 +201,7 @@ body{
 		<div class="login">
 			<form method="post" action="">
 			{% csrf_token %}
-				<label for="username">User name:</label>
-				<input type="text" name="username" value="" id="username">
-
-				<label for="password">Password:</label>
-				<input type="password" name="password" value="" id="password">
+			    {{form.as_table}}
 
 				<input type="submit" value="Login" id="login_button"/>
 				<input type="hidden" name="login" value="/patient_list/" />
@@ -218,8 +214,8 @@ body{
 				{% csrf_token %}
 				<input type="submit" value="Sign Up" id="sign_up_button" />
 				<input type="hidden" name="sign_up" value="Sign_Up.html" />
+                {% csrf_token %}
 			</form>
-
 		</div>
 		{% endblock %}
 

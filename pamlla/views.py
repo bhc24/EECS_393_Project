@@ -11,12 +11,8 @@ from pamlla.models import UserProfile, Patient, Doctor, Prediction, Document
 
 @login_required(login_url='/login/')
 def patients(request):
-
-    # get the current active user
-    user=User.objects.get(id=request.user.id)
-    # Assume its a doctor?
-    user=User.objects.get(id=request.user.id)
-    doctor_profile = UserProfile.objects.get(user=user)
+    #user=User.objects.get(id=request.user)
+    doctor_profile = UserProfile.objects.get(user=request.user)
     doctor = Doctor.objects.get(doctor=doctor_profile)
     patient_list = Patient.objects.filter(doctor=doctor)
     return render(request, "Patient_List.html", {'patient_list': patient_list})
@@ -30,14 +26,15 @@ def add_patient(request):
         # Check existence of patient name
         if form.is_valid():
             cd = form.cleaned_data
-            user = User(username=cd['username'], password=cd['password'])
+            user = User(username=cd['username'], first_name=cd['first_name'], last_name=cd['last_name'])
+            user.set_password(cd['password'])
             user.save()
-            user_profile=UserProfile(user=user, name=cd['patient_name'])
+            user_profile=UserProfile(user=user)
             user_profile.save()
             user=User.objects.get(id=request.user.id)
-            doctor_profile = UserProfile.objects.get(user=user)
+            doctor_profile = UserProfile.objects.get(user=request.user)
             doctor = Doctor.objects.get(doctor=doctor_profile)
-            new_patient=Patient(name=cd['patient_name'], patient=user_profile, doctor=doctor)
+            new_patient=Patient(patient=user_profile, doctor=doctor)
             new_patient.save()
             return HttpResponseRedirect('/patient_list/')
     form=NewPatientForm(
@@ -81,25 +78,23 @@ def login_view(request):
 
     logout(request)
 
-    print(request.POST)
-    print()
-    print()
-
     if 'sign_up' in request.POST:
         return HttpResponseRedirect("/signup/")
 
     form = LoginForm(request.POST or None)
 
     if request.POST:
+        print "It's a login post"
         form = LoginForm(request.POST)
         if form.is_valid():
             user = form.login()
-
+            print "Login form was valid"
             if user:
                 auth.login(request, user)
                 sessions.SESSION_EXPIRE_AT_BROWSER_CLOSE = True
                 return HttpResponseRedirect("/patient_list/")
-
+        else:
+            print "Login form was not valid :("
     return render(request, 'index.html', {'form': form})
 
 
@@ -110,17 +105,22 @@ def home(request):
 def register(request):
     errors = []
     registered = False
-
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
-
         if user_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
+            user_cd = user_form.cleaned_data
+            user = User(username=user_cd['username'],first_name=user_cd['first_name'], last_name=user_cd['last_name'])
+            print 'This is the password'
+            print user_cd['password']
+            user.set_password(user_cd['password'])
+            print user.password
             user.save()
+            user_profile = UserProfile(user=user)
+            user_profile.save()
             registered = True
-            return HttpResponseRedirect('/login/')
-
+            new_doctor = Doctor(doctor=user_profile)
+            new_doctor.save()
+            return HttpResponseRedirect('/patient_list/')
     else:
         user_form = UserForm()
 
