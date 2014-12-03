@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from pamlla import views
+from pamlla_site import settings
 
 
 admin.autodiscover()
@@ -19,5 +20,6 @@ urlpatterns = patterns('',
     url(r'^signup/', views.register),
     url(r'^logout/', views.logout_view),
     url(r'^$', views.login_view),
-    url(r'^analyze/(?P<patient_id>\w{0,50})', views.upload)
+    url(r'^analyze/(?P<patient_id>\w{0,50})', views.upload),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 )

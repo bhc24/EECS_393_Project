@@ -83,6 +83,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+MEDIA_ROOT = "pamlla/templates/media"
+MEDIA_URL = "/media/"
+
 STATIC_URL = '/static/'
 LOGIN_URL = reverse_lazy('/login/')
 LOGIN_REDIRECT_URL = reverse_lazy('/login/')

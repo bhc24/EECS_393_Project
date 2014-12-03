@@ -96,14 +96,10 @@ def compile_data(mutation, meth, rna):
 
 
 def run():
-
     # return os.path.abspath(os.curdir)
     muatated = mutation('Scripts/mutation.txt')
-    print(muatated)
     meth = methylation('Scripts/meth.txt')
-    print(meth)
     rna = RNASeq('Scripts/rna_seq.txt')
-    print(rna)
 
     compile_data(muatated, meth, rna)
 

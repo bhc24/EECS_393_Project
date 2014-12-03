@@ -4,8 +4,10 @@ from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from pamlla.forms import NewPatientForm, LoginForm, UserForm, DocumentForm, AnalysisForm
+from pamlla.forms import NewPatientForm, LoginForm, UserForm, DocumentForm#, AnalysisForm
 from pamlla.models import UserProfile, Patient, Doctor, Prediction, Document
+from Scripts.lifelines_test import make_plot
+from Scripts.Parser import run
 # Create your views here.
 
 
@@ -133,6 +135,7 @@ def logout_view(request):
 def upload(request, patient_id):
 
     if request.method == 'POST':
+        print('is post')
 
         if 'uploader' in request.POST:
 
@@ -150,11 +153,20 @@ def upload(request, patient_id):
                 return HttpResponseRedirect(path)
 
         elif 'analyze' in request.POST:
-            analysis_form = AnalysisForm(request.POST)
+            print('has analyze')
+            run()
+            make_plot()
+            prediction = Prediction(patient=Patient.objects.get(id=patient_id), url='pamlla/templates/media/foo.png')
+            prediction.save()
+            # exec(open('C:\\Users\\Ben\\Desktop\\School\\Fall 2014\\EECS 393\\Scripts\\Parser.py').read())
+            # exec(open('C:\\Users\\Ben\\Desktop\\School\\Fall 2014\\EECS 393\\Scripts\\lifelines_test.py').read())
 
-            if analysis_form.is_valid():
-                path = '/history/%s' % patient_id
-                return HttpResponseRedirect(path)
+           # analysis_form = AnalysisForm(request.POST)
+            #print('form created: ')
+            #if analysis_form.is_valid():
+            #    print('form valid')
+            path = '/history/%s' % patient_id
+            return HttpResponseRedirect(path)
             pass
 
     else:

@@ -26,6 +26,7 @@ class Doctor(models.Model):
 class Prediction(models.Model):
     patient = models.ForeignKey('Patient')
     date = models.DateTimeField(auto_now_add=True)
+    url = models.CharField(max_length=100)
 
     def __unicode__(self):  # pragma: no cover
         return u'%s %s' % (self.patient, self.date)

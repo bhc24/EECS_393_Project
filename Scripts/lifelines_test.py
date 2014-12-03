@@ -6,6 +6,7 @@ from lifelines.utils import k_fold_cross_validation
 from matplotlib import pyplot as plt
 from lifelines import KaplanMeierFitter
 
+
 def make_plot():
 
     # Tests to make sure the data will be converted to a dataframe correctly
@@ -70,4 +71,5 @@ def make_plot():
 
     kmf.plot(ax=ax)
 
-    plt.savefig('pamlla/templates/foo.png')
+    plt.savefig('pamlla/templates/media/foo.png')
+    print('hello')

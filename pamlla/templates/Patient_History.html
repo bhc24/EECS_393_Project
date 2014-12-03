@@ -47,7 +47,7 @@ body{
 
 .kmplot{
 	position: absolute;
-	top: calc(30% - 75px);
+	top: calc(50% - 75px);
 	left: calc(25% - 50px);
 	height: 150px;
 	width: 350px;
@@ -114,16 +114,6 @@ body{
 		<div class="grad"></div>
 		<div class="header">
 			<div><span>Patient History</span></div>
-		</div>
-		<br>
-
-		<div class="login">
-			{%for prediction in prediction%}
-				<p>Picture will be here eventually</p>
-				<div class="table" id="variant_table"></div>
-			{%empty%}
-				<p>No Predictions to display yet.</p>
-			{%endfor%}
 
 			<form method="post" action="">
 				{% csrf_token %}
@@ -131,8 +121,20 @@ body{
 				<input type="hidden" name="new_analysis" value="/analyze/{patient_id}" />
 				{% csrf_token %}
 			</form>
-
 		</div>
+		<br>
+
+		<div class="kmplot">
+			<p> <img src="/../media/foo.png" style="width: 150% height: 100%"/></p>
+		</div>
+
+
+			<!--{%for prediction in predictions%}-->
+				<!--<p> <img src="{{ MEDIA_ROOT }}/foo.png" /></p>-->
+				<!--<div class="table" id="variant_table"></div>-->
+			<!--{%empty%}-->
+				<!--<p>No Predictions to display yet.</p>-->
+			<!--{%endfor%}-->
 
 
 
