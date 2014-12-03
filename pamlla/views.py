@@ -11,10 +11,6 @@ from pamlla.models import UserProfile, Patient, Doctor, Prediction, Document
 
 @login_required(login_url='/login/')
 def patients(request):
-
-    # get the current active user
-    user=User.objects.get(id=request.user.id)
-    # Assume its a doctor?
     user=User.objects.get(id=request.user.id)
     doctor_profile = UserProfile.objects.get(user=user)
     doctor = Doctor.objects.get(doctor=doctor_profile)
@@ -29,7 +25,7 @@ def add_patient(request):
         form = NewPatientForm(request.POST)
         # Check existence of patient name
         if form.is_valid():
-            cd = form.cleaned_data
+            cd = form.cleaned_data()
             user = User(username=cd['username'], password=cd['password'])
             user.save()
             user_profile=UserProfile(user=user, name=cd['patient_name'])
@@ -110,17 +106,19 @@ def home(request):
 def register(request):
     errors = []
     registered = False
-
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
-
         if user_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
+            user_cd = user_form.cleaned_data
+            user = User(username=user_cd['username'], password=user_cd['password'], first_name=user_cd['first_name'], last_name=user_cd['last_name'])
             user.save()
+            user_profile=UserProfile(user=user, name=user['first_name']+user['last_name'], isPatient=True, isDoctor=False)
+            user_profile.save()
             registered = True
-            return HttpResponseRedirect('/login/')
-
+            new_doctor=Doctor(name=user_cd['name'], doctor=user_profile)
+            new_doctor.save()
+            # mygroup, created = Group.objects.get_or_create(name=user.username)
+            return HttpResponseRedirect('/patient_list/')
     else:
         user_form = UserForm()
 
