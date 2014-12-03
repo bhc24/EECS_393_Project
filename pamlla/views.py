@@ -84,17 +84,13 @@ def login_view(request):
     form = LoginForm(request.POST or None)
 
     if request.POST:
-        print "It's a login post"
         form = LoginForm(request.POST)
         if form.is_valid():
             user = form.login()
-            print "Login form was valid"
             if user:
                 auth.login(request, user)
                 sessions.SESSION_EXPIRE_AT_BROWSER_CLOSE = True
                 return HttpResponseRedirect("/patient_list/")
-        else:
-            print "Login form was not valid :("
     return render(request, 'index.html', {'form': form})
 
 
@@ -110,10 +106,7 @@ def register(request):
         if user_form.is_valid():
             user_cd = user_form.cleaned_data
             user = User(username=user_cd['username'],first_name=user_cd['first_name'], last_name=user_cd['last_name'])
-            print 'This is the password'
-            print user_cd['password']
             user.set_password(user_cd['password'])
-            print user.password
             user.save()
             user_profile = UserProfile(user=user)
             user_profile.save()

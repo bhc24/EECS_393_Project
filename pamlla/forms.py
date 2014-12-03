@@ -20,10 +20,6 @@ class LoginForm(forms.Form):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
         user = auth.authenticate(username=username, password=password)
-        print "This is the user"
-        print user
-        print username
-        print password
         if not user or not user.is_active:
             raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
         return self.cleaned_data

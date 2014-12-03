@@ -110,12 +110,32 @@ body{
  
 	<body>
 
-        {%for prediction in prediction%}
-            <p>Picture will be here eventually</p>
-            <div class="table" id="variant_table"></div>
-        {%empty%}
-            <p>No Predictions to display yet.</p>
-        {%endfor%}
+		<div class="body"></div>
+		<div class="grad"></div>
+		<div class="header">
+			<div>Patient History</span></div>
+		</div>
+		<br>
+
+		<div class="login">
+			{%for prediction in prediction%}
+				<p>Picture will be here eventually</p>
+				<div class="table" id="variant_table"></div>
+			{%empty%}
+				<p>No Predictions to display yet.</p>
+			{%endfor%}
+
+			<form method="post" action="">
+				{% csrf_token %}
+				<input type="submit" value="Sign Up" id="sign_up_button" />
+				<input type="hidden" name="sign_up" value="Sign_Up.html" />
+				{% csrf_token %}
+			</form>
+
+		</div>
+
+
+
         <!--<div class="header">-->
             <!--<div>Fake Patient's history</div>-->
         <!--</div>-->
