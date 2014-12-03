@@ -14,21 +14,14 @@ class UserProfile(models.Model):
 
 
 class Patient(models.Model):
-    name = models.CharField(max_length=45)
     patient = models.ForeignKey('UserProfile')
     doctor = models.ForeignKey('Doctor')
 
-    def __unicode__(self):  # pragma: no cover
-        return self.name
-
+    def __unicode__(self):
+        return self.patient.user.username
 
 class Doctor(models.Model):
-    name = models.CharField(max_length=45)
     doctor = models.ForeignKey('UserProfile')
-
-    def __unicode__(self):  # pragma: no cover
-        return self.name
-
 
 class Prediction(models.Model):
     patient = models.ForeignKey('Patient')
