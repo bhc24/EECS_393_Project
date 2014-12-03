@@ -76,7 +76,7 @@ class SurvivalFactors(models.Model):
     logit = models.ForeignKey('Logit')
     hazard = models.ForeignKey('HazardFunction')
 
-
 class Document(models.Model):
-    prediction = models.ForeignKey('Prediction')
     docfile = models.FileField(upload_to='documents')
+    # methfile = models.FileField(upload_to='documents')
+    # rnafile = models.FileField(upload_to='documents')

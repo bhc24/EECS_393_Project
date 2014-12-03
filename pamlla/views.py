@@ -132,20 +132,27 @@ def logout_view(request):
     return render(request, 'Log_Out.html')
 
 
-def analyze(request):
+def upload(request):
 
     if request.method == 'POST':
-        analyze_form = DocumentForm(request.POST, request.FILES)
 
-        if analyze_form.is_valid():
-            for docfile in request.FILES:
-                newdoc = Document(docfile = request.FILES[docfile])
-                newdoc.save()
+        upload_form = DocumentForm(request.POST, request.FILES)
+
+        if upload_form.is_valid():
+
+            mutationdoc = Document(docfile=request.FILES['mutationfile'])
+            mutationdoc.save()
+            methdoc = Document(docfile=request.FILES['methfile'])
+            methdoc.save()
+            rnadoc = Document(docfile=request.FILES['rnafile'])
+            rnadoc.save()
+
+            return HttpResponseRedirect('/history/')
 
     else:
-        analyze_form = DocumentForm()
+        upload_form = DocumentForm()
 
     documents = Document.objects.all()
 
-    return render(request, 'Patient_Analyze.html', {'documents': documents, 'form': analyze_form})
+    return render(request, 'Patient_Analyze.html', {'documents': documents, 'form': upload_form})
 

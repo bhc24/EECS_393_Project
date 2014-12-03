@@ -2,7 +2,7 @@ __author__ = 'Ben'
 
 import re
 import pickle
-import pandas as pd
+
 
 def methylation():
     gene_bvalue = {}

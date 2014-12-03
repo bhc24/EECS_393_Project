@@ -19,5 +19,5 @@ urlpatterns = patterns('',
     url(r'^signup/', views.register),
     url(r'^logout/', views.logout_view),
     url(r'^$', views.login_view),
-    url(r'^analyze', views.analyze)
+    url(r'^analyze', views.upload)
 )

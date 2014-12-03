@@ -45,8 +45,8 @@ class UserForm(forms.ModelForm):
 
 
 class DocumentForm(forms.Form):
-    mutationfile = forms.FileField(label='Select a mutation file', help_text='CSV. max: 2 megabytes')
-    methfile = forms.FileField(label='Select a methylation file', help_text='CSV. max: 2 megabytes')
-    rnafile = forms.FileField(label='Select a rna seq file', help_text='CSV. max: 2 megabytes')
+    mutationfile = forms.FileField(label='Select a mutation file', help_text='')
+    methfile = forms.FileField(label='Select a methylation file', help_text='')
+    rnafile = forms.FileField(label='Select a rna seq file', help_text='')
 
 
