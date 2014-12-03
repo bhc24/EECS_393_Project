@@ -113,7 +113,7 @@ body{
 		<div class="body"></div>
 		<div class="grad"></div>
 		<div class="header">
-			<div>Patient History</span></div>
+			<div><span>Patient History</span></div>
 		</div>
 		<br>
 
@@ -127,8 +127,8 @@ body{
 
 			<form method="post" action="">
 				{% csrf_token %}
-				<input type="submit" value="Sign Up" id="sign_up_button" />
-				<input type="hidden" name="sign_up" value="Sign_Up.html" />
+				<input type="submit" value="New Analysis" id="new_analysis" />
+				<input type="hidden" name="new_analysis" value="/analyze/{patient_id}" />
 				{% csrf_token %}
 			</form>
 

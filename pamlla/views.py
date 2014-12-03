@@ -4,7 +4,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from pamlla.forms import NewPatientForm, LoginForm, UserForm, DocumentForm
+from pamlla.forms import NewPatientForm, LoginForm, UserForm, DocumentForm, AnalysisForm
 from pamlla.models import UserProfile, Patient, Doctor, Prediction, Document
 # Create your views here.
 
@@ -45,7 +45,11 @@ def add_patient(request):
 
 @login_required(login_url='/login/')
 def history(request, patient_id):
-    user=User.objects.get(id=request.user.id)
+
+    if 'new_analysis' in request.POST:
+        url = "/analyze/%s/" % patient_id
+        return HttpResponseRedirect(url)
+
     # Assume its a doctor?
     user=User.objects.get(id=request.user.id)
     profile = UserProfile.objects.get(user=user)
@@ -71,6 +75,7 @@ def history(request, patient_id):
                 # Get all Data Sets for each history
         # else:
             # TODO: No permission to view, Force Logout?
+    # path = "/analyze/%s" % patient_id
     return render(request, "Patient_History.html", {'predictions':predictions})
 
 
@@ -125,27 +130,37 @@ def logout_view(request):
     return render(request, 'Log_Out.html')
 
 
-def upload(request):
+def upload(request, patient_id):
 
     if request.method == 'POST':
 
-        upload_form = DocumentForm(request.POST, request.FILES)
+        if 'uploader' in request.POST:
 
-        if upload_form.is_valid():
+            upload_form = DocumentForm(request.POST, request.FILES)
 
-            mutationdoc = Document(docfile=request.FILES['mutationfile'])
-            mutationdoc.save()
-            methdoc = Document(docfile=request.FILES['methfile'])
-            methdoc.save()
-            rnadoc = Document(docfile=request.FILES['rnafile'])
-            rnadoc.save()
+            if upload_form.is_valid():
 
-            return HttpResponseRedirect('/history/')
+                mutationdoc = Document(docfile=request.FILES['mutationfile'])
+                mutationdoc.save()
+                methdoc = Document(docfile=request.FILES['methfile'])
+                methdoc.save()
+                rnadoc = Document(docfile=request.FILES['rnafile'])
+                rnadoc.save()
+                path = '/history/%s' % patient_id
+                return HttpResponseRedirect(path)
+
+        elif 'analyze' in request.POST:
+            analysis_form = AnalysisForm(request.POST)
+
+            if analysis_form.is_valid():
+                path = '/history/%s' % patient_id
+                return HttpResponseRedirect(path)
+            pass
 
     else:
         upload_form = DocumentForm()
 
-    documents = Document.objects.all()
+        documents = Document.objects.all()
 
-    return render(request, 'Patient_Analyze.html', {'documents': documents, 'form': upload_form})
+        return render(request, 'Patient_Analyze.html', {'documents': documents, 'form': upload_form})
 

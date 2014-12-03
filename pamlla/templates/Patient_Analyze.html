@@ -182,7 +182,13 @@ body{
 					{{ form.rnafile.errors }}
 					{{ form.rnafile }}
 				</p>
-				<p><input type="submit" value="Upload" /></p>
+				<input type="submit" name="upload" value="Upload" id="'upload_files" />
+				<input type="hidden" name="uploader" value="Patient_History.html" />
+			</form>
+			<form id="analyze_form" action="" method="post">
+				{% csrf_token %}
+				<input type="submit" name="analysis" value="Start Analysis" id="analyze_patient" />
+				<input type="hidden" name="analyze" value="Patient_History.html" />
 			</form>
 		</div>
 

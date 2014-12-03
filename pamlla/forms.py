@@ -2,7 +2,8 @@ __author__ = 'stephaniehippo'
 from django import forms
 from django.contrib import auth
 from django.contrib.auth.models import User
-
+from Scripts.Parser import run
+from Scripts.lifelines_test import make_plot
 
 
 class NewPatientForm(forms.Form):
@@ -50,4 +51,13 @@ class DocumentForm(forms.Form):
     methfile = forms.FileField(label='Select a methylation file', help_text='')
     rnafile = forms.FileField(label='Select a rna seq file', help_text='')
 
+class AnalysisForm(forms.Form):
+    run()
+    print()
+    print('passed parse')
+    print()
+    print()
+    # print(direct)
+    make_plot()
+    pass
 
