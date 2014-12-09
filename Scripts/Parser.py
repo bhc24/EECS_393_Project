@@ -7,8 +7,8 @@ import pickle
 
 def methylation(path):
     gene_bvalue = {}
-
-    with open(path, 'r') as file:
+    meth_path = path + 'meth.txt'
+    with open(meth_path, 'r') as file:
         line_count = 0
 
         for line in file:
@@ -32,8 +32,8 @@ def methylation(path):
 
 def RNASeq(path):
     gene_rpkm = {}
-
-    with open(path, 'r') as file:
+    seq_path = path + 'rna_seq.txt'
+    with open(seq_path, 'r') as file:
         line_count = 0
 
         for line in file:
@@ -60,7 +60,8 @@ def RNASeq(path):
 
 def mutation(path):
     mutated_gene = []
-    with open(path, 'r') as file:
+    mutation_path = path + 'mutation.txt'
+    with open(mutation_path, 'r') as file:
         line_count = 0
 
         for line in file:
@@ -95,13 +96,13 @@ def compile_data(mutation, meth, rna):
             fp.write('%.3f\t' % rna[gene])
 
 
-def run():
-    # return os.path.abspath(os.curdir)
-    muatated = mutation('Scripts/mutation.txt')
-    meth = methylation('Scripts/meth.txt')
-    rna = RNASeq('Scripts/rna_seq.txt')
+def run(path):
 
-    compile_data(muatated, meth, rna)
+    muatated = mutation(path)
+    meth = methylation(path)
+    rna = RNASeq(path)
+
+    #compile_data(muatated, meth, rna)
 
 
 

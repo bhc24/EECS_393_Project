@@ -1,5 +1,6 @@
 __author__ = 'Ben'
 
+import random
 import pandas as pd
 from lifelines import CoxPHFitter
 from lifelines.utils import k_fold_cross_validation
@@ -7,13 +8,14 @@ from matplotlib import pyplot as plt
 from lifelines import KaplanMeierFitter
 
 
-def make_plot():
+
+def make_plot(pic_path):
 
     # Tests to make sure the data will be converted to a dataframe correctly
     # This data frame is also used in the various tests
     #
     # Test successful on 11/20/2014 3:11 am with top 20 proteins as data set
-    data = pd.read_csv('Scripts/compiled_data.csv', header=0)
+    data = pd.read_csv('compiled_data.csv', header=0)
 
     #print(data.head())
 
@@ -71,5 +73,7 @@ def make_plot():
 
     kmf.plot(ax=ax)
 
-    plt.savefig('pamlla/templates/media/foo.png')
+    pic_path = pic_path+'/predictions/foo.png'
+
+    plt.savefig(pic_path)
     print('hello')

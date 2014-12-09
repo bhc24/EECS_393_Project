@@ -1,7 +1,7 @@
 # Create your models here.
+
 from django.db import models
 from django.contrib.auth.models import User
-
 
 # 1. Created OneToOneField between the library User object and our UserProfile model
 # 2. Created extra fields: isDoctor and isPatient
@@ -71,6 +71,13 @@ class SurvivalFactors(models.Model):
     hazard = models.ForeignKey('HazardFunction')
 
 class Document(models.Model):
-    docfile = models.FileField(upload_to='documents')
+
+    url = models.CharField(max_length=100)
+    # new_url = re.sub("\W+", "", url.lower())
+
+    docfile = models.FileField(upload_to=url)
+
+
+
     # methfile = models.FileField(upload_to='documents')
     # rnafile = models.FileField(upload_to='documents')

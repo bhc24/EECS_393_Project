@@ -8,12 +8,12 @@ from pamlla.forms import NewPatientForm, LoginForm, UserForm, DocumentForm#, Ana
 from pamlla.models import UserProfile, Patient, Doctor, Prediction, Document
 from Scripts.lifelines_test import make_plot
 from Scripts.Parser import run
-# Create your views here.
+
 
 
 @login_required(login_url='/login/')
 def patients(request):
-    #user=User.objects.get(id=request.user)
+
     doctor_profile = UserProfile.objects.get(user=request.user)
     doctor = Doctor.objects.get(doctor=doctor_profile)
     patient_list = Patient.objects.filter(doctor=doctor)
@@ -143,12 +143,31 @@ def upload(request, patient_id):
 
             if upload_form.is_valid():
 
-                mutationdoc = Document(docfile=request.FILES['mutationfile'])
+                doc_path = 'documents/%s/' % patient_id
+
+                print(doc_path)
+
+                mutationdoc = Document(docfile=request.FILES['mutationfile'], url=doc_path)
+                mutationdoc.user = request.user
                 mutationdoc.save()
-                methdoc = Document(docfile=request.FILES['methfile'])
+
+                print(mutationdoc.url)
+
+                methdoc = Document(docfile=request.FILES['methfile'], url=doc_path)
+                methdoc.user = request.user
                 methdoc.save()
-                rnadoc = Document(docfile=request.FILES['rnafile'])
+
+                rnadoc = Document(docfile=request.FILES['rnafile'], url=doc_path)
+                rnadoc.user = request.user
                 rnadoc.save()
+
+                doc_path = 'pamlla/templates/media/' + doc_path
+
+                run(doc_path)
+                make_plot(doc_path)
+
+                prediction = Prediction(patient=Patient.objects.get(id=patient_id), url='pamlla/templates/media/foo.png')
+
                 path = '/history/%s' % patient_id
                 return HttpResponseRedirect(path)
 
